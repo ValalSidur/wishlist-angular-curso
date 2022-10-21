@@ -36,8 +36,14 @@ module.exports = function (config) {
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
-    autoWatch: true,
-    browsers: ['Chrome'],
+    autoWatch: false, //Se pone en false por circleci
+    browsers: ['Chrome', 'ChomeHeadless', 'ChromeHeadlessCI'],
+    customLaunchers:{
+      chromeHeadlessCI:{
+        base: 'ChromeHedless',
+        flags: ['--no-sandbox', '--disable-gpu', '--disable-translate', '--disable-extension', '--remote-debugging-port=9223']
+      }
+    },
     singleRun: false,
     restartOnFileChange: true
   });

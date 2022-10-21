@@ -5,6 +5,7 @@ export class DestinoViaje {
 
 	constructor(public nombre:string, public imagenUrl:string, public votes: number = 0){	
 		this.servicios = ['pileta', 'desayuno'];
+		this.selected = false;
 	}
 	
 	isSelected(): boolean{

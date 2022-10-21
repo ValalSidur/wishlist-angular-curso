@@ -14,11 +14,11 @@ import { appState } from './../../app.module';
 export class ListaDestinosComponent implements OnInit {
   @Output() onItemAdded: EventEmitter<DestinoViaje>;
   updates: string[];
-  all;
+  all: DestinoViaje[];
   constructor(public destinosApiClient:DestinosApiClient, public store: Store<appState>) { 
     this.onItemAdded = new EventEmitter();
     this.updates = [];
-    
+
     //Redux
     this.store.select(state => state.destinos.favorito)
     .subscribe(d => {
@@ -43,7 +43,6 @@ export class ListaDestinosComponent implements OnInit {
   agregado(d: DestinoViaje) {
     this.destinosApiClient.add(d);
     this.onItemAdded.emit(d);
-    
     //Disparar redux
     this.store.dispatch(new NuevoDestinoAction(d));
     //return false 
@@ -54,6 +53,6 @@ export class ListaDestinosComponent implements OnInit {
   }
 
   getAll(){
-
+      console.log(this.all);
   }
 }

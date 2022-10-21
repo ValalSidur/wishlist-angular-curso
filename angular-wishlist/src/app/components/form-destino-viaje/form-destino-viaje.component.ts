@@ -6,6 +6,7 @@ import { fromEvent } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map, switchMap } from 'rxjs/operators';
 import { ajax } from 'rxjs/ajax';
 import { appConfig, APP_CONFIG } from 'src/app/app.module';
+import { DestinosApiClient } from 'src/app/models/destinos-api-client';
 
 @Component({
   selector: 'app-form-destino-viaje',
@@ -20,7 +21,7 @@ export class FormDestinoViajeComponent implements OnInit {
   minLongitud: number;
   searchResults: string[];
 
-  constructor(fb: FormBuilder, @Inject(forwardRef(() => APP_CONFIG)) private config: appConfig) { 
+  constructor(private apicliente: DestinosApiClient, fb: FormBuilder, @Inject(forwardRef(() => APP_CONFIG)) private config: appConfig) { 
     //inicializar
     this.onItemAdded = new EventEmitter();
     //vinculacion con tag html

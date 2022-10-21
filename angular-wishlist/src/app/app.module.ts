@@ -7,7 +7,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { HttpClient, HttpClientModule, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Dexie } from 'dexie';
-import { TranslateLoader, TranslateModule, TranslateService, TranslationChangeEvent } from '@ngx-translate/core/public_api';
+import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { DestinoViajeComponent } from './components/destino-viaje/destino-viaje.component';
@@ -28,6 +29,9 @@ import { DestinosApiClient } from './models/destinos-api-client';
 import { DestinoViaje } from './models/destino-viaje';
 import { from, Observable } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { EspiameDirective } from './espiame.directive';
+import { TrackearClickDirective } from './trackear-click.directive';
 
 //app config
 export interface appConfig{
@@ -128,8 +132,8 @@ class TranslationLoader implements TranslationLoader{
       }
       return results;
     }).then((traducciones) => {
-      console.log('traducciones cargadas: ');
-      console.log(traducciones);
+      //console.log('traducciones cargadas: ');
+      //console.log(traducciones);
       return traducciones;
     }).then((traducciones) => {
       return traducciones.map((t) => ({[t.key]: t.value}));
@@ -155,7 +159,9 @@ function HttpLoaderFactory(http: HttpClient){
     VuelosComponentComponent,
     VuelosMainComponentComponent,
     VuelosMasInfoComponentComponent,
-    VuelosDetalleComponentComponent
+    VuelosDetalleComponentComponent,
+    EspiameDirective,
+    TrackearClickDirective
   ],
   imports: [
     BrowserModule,
@@ -173,12 +179,14 @@ function HttpLoaderFactory(http: HttpClient){
         useFactory: (HttpLoaderFactory),
         deps: [HttpClient]
       }
-    })
+    }),
+    NgxMapboxGLModule,
+    BrowserAnimationsModule
   ],
   providers: [
     AuthService, UsuarioLogueadoGuard, DestinosApiClient,
     { provide: APP_CONFIG, useValue: APP_CONFIG_VALUE },
-    //AppLoadService, 
+    AppLoadService, 
     { provide: APP_INITIALIZER, useFactory: init_app, deps: [AppLoadService], multi: true },
     myDataBase
   ],
